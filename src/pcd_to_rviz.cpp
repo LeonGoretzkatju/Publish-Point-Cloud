@@ -61,6 +61,7 @@ int main(int argc, char **argv)
   int num_files = 6; // Total number of PCD files to load and publish
   double frequency = 1.0;
   ros::Rate loop_rate(frequency);
+  // double i_array[6] = {1.0,2.0,3.0,4.0,5.0,6.0};
 
   while (ros::ok())
   {
@@ -78,13 +79,15 @@ int main(int argc, char **argv)
 
       pcl::toROSMsg(cloud, output);
       output.header.frame_id = "odom";
-      output.header.stamp = ros::Time::now();
-
+      // output.header.seq = i_array[i-1];
+      // std::cout << output.header.seq << std::endl;
+      output.header.stamp = ros::Time(i);
+      std::cout << output.header.stamp << std::endl;
       pcl_pub.publish(output);
       ros::spinOnce();
       loop_rate.sleep();
     }
-    sleep(40.0);
+    sleep(10.0);
   }
 
 return 0;
